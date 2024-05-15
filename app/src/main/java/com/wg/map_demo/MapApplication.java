@@ -15,11 +15,11 @@ public class MapApplication extends Application {
         AMapLocationClient.updatePrivacyShow(this,true,true);
         AMapLocationClient.updatePrivacyAgree(this,true);
         //地图隐私政策同意
-//        MapsInitializer.updatePrivacyShow(this,true,true);
-//        MapsInitializer.updatePrivacyAgree(this,true);
+        MapsInitializer.updatePrivacyShow(this,true,true);
+        MapsInitializer.updatePrivacyAgree(this,true);
         //导航隐私政策同意
-//        NaviSetting.updatePrivacyShow(this, true, true);
-//        NaviSetting.updatePrivacyAgree(this, true);
+        NaviSetting.updatePrivacyShow(this, true, true);
+        NaviSetting.updatePrivacyAgree(this, true);
         //搜索隐私政策同意
         ServiceSettings.updatePrivacyShow(this,true,true);
         ServiceSettings.updatePrivacyAgree(this,true);

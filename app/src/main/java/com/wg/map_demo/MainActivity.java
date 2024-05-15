@@ -16,6 +16,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -28,7 +29,7 @@ import pub.devrel.easypermissions.PermissionRequest;
 
 public class MainActivity extends AppCompatActivity implements AMapLocationListener, EasyPermissions.PermissionCallbacks, LocationSource {
     //地图相关信息
-    private MapView mapView;
+    private TextureMapView mapView;
     private AMap aMap;
     //权限申请结果码
     private int REQUEST_PERMISSIONS = 110;
