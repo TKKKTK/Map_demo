@@ -1,5 +1,6 @@
 package com.wg.map_demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class FirstActivity extends BaseActivity {
     private Map<MapType, Fragment> mMapDataPage;
 
-    private Button avp_btn,sd_btn;
+    private Button avp_btn,sd_btn,seconed_btn;
 
     @Override
     protected void createPages() {
@@ -47,6 +48,7 @@ public class FirstActivity extends BaseActivity {
     private void initView(){
         avp_btn = findViewById(R.id.avp);
         sd_btn = findViewById(R.id.sd);
+        seconed_btn = findViewById(R.id.seconed_btn);
 
         avp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,13 @@ public class FirstActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().postValue(MapType.SD);
+            }
+        });
+
+        seconed_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FirstActivity.this, SecondActivity.class));
             }
         });
     }

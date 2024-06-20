@@ -5,13 +5,13 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\17264\\.android\\debug.keystore')
+            storeFile project.file('key\\debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
         release {
-            storeFile file('E:\\AndroidProject\\key_store\\map.jks')
+            storeFile project.file('key\\map.jks')
             storePassword 'wg991003'
             keyAlias 'key0'
             keyPassword 'wg991003'
@@ -56,17 +56,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    //地图功能
- //   implementation 'com.amap.api:3dmap:10.0.600'
-
- //   implementation 'com.amap.api:navi-3dmap:latest.integration'
-//    implementation 'com.amap.api:navi-3dmap:7.4.0_3dmap7.4.0'
-//
-////    //定位功能
-//    implementation 'com.amap.api:location:6.2.0'
-////    //搜索功能
-//    implementation 'com.amap.api:search:9.5.0'
-
     //Google推荐的EasyPermission库
     implementation 'pub.devrel:easypermissions:3.0.0'
     implementation files('libs\\AMap3DMap_10.0.600_AMapNavi_10.0.600_AMapSearch_9.7.1_AMapLocation_6.4.3_20240314.aar')

@@ -2,16 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.wg.map_demo.mapview.sd.HomeSdlayout
+
+    <com.wg.map_demo.mapview.sd.Sdlayout
         android:id="@+id/home_sd_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-<!--    <com.amap.api.maps.TextureMapView-->
-<!--        android:id="@+id/home_sd_map"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="home碎片"/>-->
+
+    <Button
+        android:id="@+id/entry_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="进入"/>
 </FrameLayout>

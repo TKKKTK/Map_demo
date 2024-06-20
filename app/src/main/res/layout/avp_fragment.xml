@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="avp碎片"/>
-    <com.example.carsearch.mapview.avp.AvpLayout
+    <com.wg.map_demo.mapview.avp.AvpLayout
         android:id="@+id/avp_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
