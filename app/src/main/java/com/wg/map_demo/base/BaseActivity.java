@@ -1,6 +1,7 @@
 package com.wg.map_demo.base;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import com.wg.map_demo.ApplicationInstance;
 import com.wg.map_demo.data.MapType;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
+    private static final String TAG = "BaseActivity";
     protected abstract void createPages();
 
     protected abstract void mapTapeChange(MapType mapType);
@@ -24,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void onChanged(MapType mapType) {
                 mapTapeChange(mapType);
+                Log.d(TAG, "onChanged: mapType ==> " + mapType.toString());
             }
         });
     }

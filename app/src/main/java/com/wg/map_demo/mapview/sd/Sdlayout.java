@@ -20,11 +20,18 @@ import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.wg.map_demo.MapTypeEvent;
 import com.wg.map_demo.R;
 import com.wg.map_demo.base.BaseMapLayout;
 import com.wg.map_demo.util.ContextUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class Sdlayout extends BaseMapLayout implements SdNaviListener, LocationListener, LocationSource {
+    private static final String TAG = "Sdlayout";
+
     private TextureMapView textureMapView;
 
     private AMap aMap;
@@ -60,6 +67,17 @@ public class Sdlayout extends BaseMapLayout implements SdNaviListener, LocationL
         initLocationStyle();
         //开启定位
         startLocation();
+
+    }
+
+    public void registerEvent(){
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void OnEvent(MapTypeEvent mapTypeEvent){
+        Log.d(TAG, "OnEvent: " + mapTypeEvent.getType());
     }
 
     private void initMap(){
@@ -158,6 +176,7 @@ public class Sdlayout extends BaseMapLayout implements SdNaviListener, LocationL
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         textureMapView.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

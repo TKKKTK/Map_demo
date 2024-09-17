@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.wg.map_demo.mapview.sd.Sdlayout
-        android:id="@+id/home_sd_layout"
+<layout>
+    <data>
+  <variable
+      name="click"
+      type="android.view.View.OnClickListener" />
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/entry_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="进入"/>
-</FrameLayout>
+        <com.wg.map_demo.mapview.sd.Sdlayout
+            android:id="@+id/home_sd_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/entry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="进入" />
+    </FrameLayout>
+</layout>
+
+

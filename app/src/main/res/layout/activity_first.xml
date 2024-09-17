@@ -35,6 +35,7 @@
             android:id="@+id/avp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="avp地图" />
         <Button
             android:id="@+id/seconed_btn"

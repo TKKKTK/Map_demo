@@ -9,20 +9,27 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 import com.wg.map_demo.ApplicationInstance;
 import com.wg.map_demo.FirstActivity;
+import com.wg.map_demo.MessageEvent;
 import com.wg.map_demo.R;
 import com.wg.map_demo.base.BaseFragment;
 import com.wg.map_demo.data.MapType;
 import com.wg.map_demo.mapview.sd.Sdlayout;
 
-public class HomeFragment extends BaseFragment {
+import org.greenrobot.eventbus.EventBus;
+
+public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private Sdlayout homeSdlayout;
 
     private Button entry_btn;
 
     private View root;
+
+    private ViewDataBinding viewDataBinding;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +39,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.home_fragment,container,false);
+        //viewDataBinding = DataBindingUtil.inflate(inflater,R.layout.home_fragment,container,false);
+
         initView();
         initEvent();
+        //viewDataBinding. = this;
+        //homeSdlayout = viewDataBinding.getRoot().findViewById(R.id.home_sd_layout);
         homeSdlayout.onCreate(savedInstanceState);
         getLifecycle().addObserver(homeSdlayout);
         return root;
@@ -46,8 +57,9 @@ public class HomeFragment extends BaseFragment {
 
     private void initEvent(){
         entry_btn.setOnClickListener((View view)-> {
-              ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().setValue(MapType.SD);
-              startActivity(new Intent(getActivity(), FirstActivity.class));
+            ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().setValue(MapType.SD);
+            EventBus.getDefault().post(new MessageEvent("进入FirstActivity"));
+            startActivity(new Intent(getActivity(), FirstActivity.class));
         });
     }
 
@@ -55,5 +67,14 @@ public class HomeFragment extends BaseFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         homeSdlayout.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.entry_btn){
+            ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().setValue(MapType.SD);
+            startActivity(new Intent(getActivity(), FirstActivity.class));
+        }
     }
 }

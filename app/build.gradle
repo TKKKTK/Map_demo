@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'org.greenrobot.greendao'
 }
+
 
 android {
     signingConfigs {
@@ -17,13 +19,13 @@ android {
             keyPassword 'wg991003'
         }
     }
+    compileSdk 34
 
-    compileSdk 33
 
     defaultConfig {
         applicationId "com.wg.map_demo"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -49,6 +51,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // 新版替代方案
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+greendao{
+    schemaVersion 1
+    targetGenDir 'src/main/java'
 }
 
 dependencies {
@@ -56,6 +68,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    implementation 'org.greenrobot:greendao:3.3.0'// add library
     //Google推荐的EasyPermission库
     implementation 'pub.devrel:easypermissions:3.0.0'
     implementation files('libs\\AMap3DMap_10.0.600_AMapNavi_10.0.600_AMapSearch_9.7.1_AMapLocation_6.4.3_20240314.aar')
