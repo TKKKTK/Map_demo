@@ -27,6 +27,8 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Age = new Property(2, int.class, "age", false, "AGE");
     }
 
+    private DaoSession daoSession;
+
 
     public UserDao(DaoConfig config) {
         super(config);
@@ -34,6 +36,7 @@ public class UserDao extends AbstractDao<User, Long> {
     
     public UserDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -81,6 +84,12 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(2, name);
         }
         stmt.bindLong(3, entity.getAge());
+    }
+
+    @Override
+    protected final void attachEntity(User entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     @Override

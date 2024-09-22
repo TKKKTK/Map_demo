@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.wg.map_demo.base.BaseActivity;
 import com.wg.map_demo.data.DaoSession;
 import com.wg.map_demo.data.MapType;
+import com.wg.map_demo.data.Orders;
+import com.wg.map_demo.data.OrdersDao;
 import com.wg.map_demo.data.User;
 import com.wg.map_demo.data.UserDao;
 import com.wg.map_demo.fragment.AvpFragment;
@@ -22,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +83,27 @@ public class FirstActivity extends BaseActivity {
                 user.setAge(30);
                 userDao.insertOrReplace(user);
 
-                List<User> userList = userDao.loadAll();
-                Log.d(TAG, "onClick: ");
+                OrdersDao ordersDao = daoSession.getOrdersDao();
+                List<Orders> ordersList = new ArrayList<>();
+                Orders orders1 = new Orders();
+                orders1.setGoodsName("薯片");
+                orders1.setUserId(user.getId());
+                ordersList.add(orders1);
+                Orders orders2 = new Orders();
+                orders2.setGoodsName("牛肉");
+                orders2.setUserId(user.getId());
+                ordersList.add(orders2);
+                Orders orders3 = new Orders();
+                orders3.setGoodsName("牛肉");
+                orders3.setUserId(user.getId());
+                ordersList.add(orders3);
+                ordersDao.insertInTx(ordersList);
+
+                User user1 = userDao.queryBuilder().where(UserDao.Properties.Name.eq("田珊珊")).build().unique();
+                List<Orders> user1OfGoods = user1.getOrders();
+                for (int i = 0; i < user1OfGoods.size(); i++) {
+                    Log.d(TAG, user1.getName() + "喜欢吃：==>"+user1OfGoods.get(i).getGoodsName());
+                }
             }
         });
         sd_btn.setOnClickListener(new View.OnClickListener() {

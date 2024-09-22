@@ -2,82 +2,99 @@ package com.wg.map_demo.data;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.ToMany;
-
-import java.util.List;
 import org.greenrobot.greendao.DaoException;
 
 @Entity
-public class User {
+public class Orders {
     @Id
     private Long id;
-    private String name;
-    private int age;
 
-    //设置一对多关联，连接属性是Orders类的外键userId
-    @ToMany(referencedJoinProperty = "userId")   // 注意参数的值
-    private List<Orders> orders;
+    private String goodsName;
+
+    private Long userId; //外键，对应用户的主键
+
+    @ToOne(joinProperty = "userId")
+    private User user;
+
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
-    @Generated(hash = 1507654846)
-    private transient UserDao myDao;
 
-    @Generated(hash = 1309193360)
-    public User(Long id, String name, int age) {
+    /** Used for active entity operations. */
+    @Generated(hash = 1717339351)
+    private transient OrdersDao myDao;
+
+
+    @Generated(hash = 1363064781)
+    public Orders(Long id, String goodsName, Long userId) {
         this.id = id;
-        this.name = name;
-        this.age = age;
+        this.goodsName = goodsName;
+        this.userId = userId;
     }
-    @Generated(hash = 586692638)
-    public User() {
+
+    @Generated(hash = 1753857294)
+    public Orders() {
     }
+
+    @Generated(hash = 251390918)
+    private transient Long user__resolvedKey;
+
+
     public Long getId() {
-        return this.id;
+        return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public String getName() {
-        return this.name;
+
+    public Long getUserId() {
+        return userId;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-    public int getAge() {
-        return this.age;
+
+    public String getGoodsName() {
+        return goodsName;
     }
-    public void setAge(int age) {
-        this.age = age;
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1907478680)
-    public List<Orders> getOrders() {
-        if (orders == null) {
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 859885876)
+    public User getUser() {
+        Long __key = this.userId;
+        if (user__resolvedKey == null || !user__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            OrdersDao targetDao = daoSession.getOrdersDao();
-            List<Orders> ordersNew = targetDao._queryUser_Orders(id);
+            UserDao targetDao = daoSession.getUserDao();
+            User userNew = targetDao.load(__key);
             synchronized (this) {
-                if (orders == null) {
-                    orders = ordersNew;
-                }
+                user = userNew;
+                user__resolvedKey = __key;
             }
         }
-        return orders;
+        return user;
     }
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 1446109810)
-    public synchronized void resetOrders() {
-        orders = null;
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1065606912)
+    public void setUser(User user) {
+        synchronized (this) {
+            this.user = user;
+            userId = user == null ? null : user.getId();
+            user__resolvedKey = userId;
+        }
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -89,6 +106,7 @@ public class User {
         }
         myDao.delete(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -100,6 +118,7 @@ public class User {
         }
         myDao.refresh(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -111,10 +130,11 @@ public class User {
         }
         myDao.update(this);
     }
+
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 2059241980)
+    @Generated(hash = 121826766)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getUserDao() : null;
+        myDao = daoSession != null ? daoSession.getOrdersDao() : null;
     }
 }
