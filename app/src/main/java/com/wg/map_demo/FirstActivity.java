@@ -2,10 +2,15 @@ package com.wg.map_demo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -71,39 +76,105 @@ public class FirstActivity extends BaseActivity {
         avp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().postValue(MapType.AVP);
-                EventBus.getDefault().post(new MessageEvent("切换avp地图"));
+//                ApplicationInstance.getInstance().getMapTypeViewModel().getMapTypeMutableLiveData().postValue(MapType.AVP);
+//                EventBus.getDefault().post(new MessageEvent("切换avp地图"));
+//
+//                mapApplication = (MapApplication) getApplication();
+//                DaoSession daoSession = mapApplication.getDaoSession();
+//                UserDao userDao = daoSession.getUserDao();
+//                User user = new User();
+//                user.setId(1L);
+//                user.setName("田珊珊");
+//                user.setAge(30);
+//                userDao.insertOrReplace(user);
+//
+//                OrdersDao ordersDao = daoSession.getOrdersDao();
+//                List<Orders> ordersList = new ArrayList<>();
+//                Orders orders1 = new Orders();
+//                orders1.setGoodsName("薯片");
+//                orders1.setUserId(user.getId());
+//                ordersList.add(orders1);
+//                Orders orders2 = new Orders();
+//                orders2.setGoodsName("牛肉");
+//                orders2.setUserId(user.getId());
+//                ordersList.add(orders2);
+//                Orders orders3 = new Orders();
+//                orders3.setGoodsName("牛肉");
+//                orders3.setUserId(user.getId());
+//                ordersList.add(orders3);
+//                ordersDao.insertInTx(ordersList);
+//
+//                // User user1 = userDao.queryBuilder().where(UserDao.Properties.Name.eq("田珊珊")).build().unique();
+//                // List<Orders> user1OfGoods = user1.getOrders();
+//                // for (int i = 0; i < user1OfGoods.size(); i++) {
+//                //     Log.d(TAG, user1.getName() + "喜欢吃：==>"+user1OfGoods.get(i).getGoodsName());
+//                // }
+//
+//                // 查询喜欢吃牛肉的用户
+//              List<Orders> orders =  ordersDao.queryBuilder().where(OrdersDao.Properties.GoodsName.eq("牛肉")).build().list();
+//
+//               for (Orders order : orders){
+//                   User user2 = order.getUser();
+//                   Log.d(TAG,"喜欢吃牛肉的用户是 ==>" + user2.getName());
+//               }
 
-                mapApplication = (MapApplication) getApplication();
-                DaoSession daoSession = mapApplication.getDaoSession();
-                UserDao userDao = daoSession.getUserDao();
-                User user = new User();
-                user.setId(1L);
-                user.setName("田珊珊");
-                user.setAge(30);
-                userDao.insertOrReplace(user);
+//                Handler handler = new Handler(Looper.getMainLooper()){
+//                    @Override
+//                    public void handleMessage(@NonNull Message msg) {
+//                        super.handleMessage(msg);
+//                        Log.d(TAG,"Looper.getMainLooper() ==> " + Thread.currentThread());
+//                        switch (msg.what){
+//                            case 1:
+//                                sendEmptyMessageDelayed(1,1000);
+//                                SystemClock.sleep(1000);
+//                                break;
+//                        }
+//
+//                    }
+//                };
 
-                OrdersDao ordersDao = daoSession.getOrdersDao();
-                List<Orders> ordersList = new ArrayList<>();
-                Orders orders1 = new Orders();
-                orders1.setGoodsName("薯片");
-                orders1.setUserId(user.getId());
-                ordersList.add(orders1);
-                Orders orders2 = new Orders();
-                orders2.setGoodsName("牛肉");
-                orders2.setUserId(user.getId());
-                ordersList.add(orders2);
-                Orders orders3 = new Orders();
-                orders3.setGoodsName("牛肉");
-                orders3.setUserId(user.getId());
-                ordersList.add(orders3);
-                ordersDao.insertInTx(ordersList);
-
-                User user1 = userDao.queryBuilder().where(UserDao.Properties.Name.eq("田珊珊")).build().unique();
-                List<Orders> user1OfGoods = user1.getOrders();
-                for (int i = 0; i < user1OfGoods.size(); i++) {
-                    Log.d(TAG, user1.getName() + "喜欢吃：==>"+user1OfGoods.get(i).getGoodsName());
+                HandlerThread handlerThread = new HandlerThread();
+                handlerThread.start();
+                try {
+                    Handler handler = new Handler(handlerThread.getLooper()){
+                        @Override
+                        public void handleMessage(@NonNull Message msg) {
+                            super.handleMessage(msg);
+                            Log.d(TAG,"Looper.getMainLooper() ==> " + Thread.currentThread());
+                            switch (msg.what){
+                                case 1:
+                                    sendEmptyMessageDelayed(1,1000);
+                                    SystemClock.sleep(1000);
+                                    break;
+                            }
+                        }
+                    };
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (true){
+                                try {
+                                    EventBus.getDefault().post(new MessageEvent("切换avp地图"));
+                                    handler.sendEmptyMessage(1);
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }).start();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+
+
+
+
+
+
+
+
+
             }
         });
         sd_btn.setOnClickListener(new View.OnClickListener() {
